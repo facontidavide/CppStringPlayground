@@ -1,5 +1,5 @@
 # CppStringPlayground
-Header only tools related to C++ strings.
+Header only tools related to C++ strings. I am developing this simple classes for myself but someone else might find them usefull.
 
 ##StringSSO
 Simple String implementation that us "small string optimization" to avoid memory allocation of strings with 23 characters
