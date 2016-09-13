@@ -1,9 +1,10 @@
 #ifndef STRINGTREE_H
 #define STRINGTREE_H
 
-
 #include <vector>
 #include <iostream>
+
+namespace StringPlayground {
 
 namespace details{
 
@@ -43,12 +44,10 @@ public:
 
 private:
 
-    friend std::ostream& operator<<(std::ostream& os, const Tree& _this)
-    {
+    friend std::ostream& operator<<(std::ostream& os, const Tree& _this){
         _this.print_impl(os, &(_this._root.children()), 0);
         return os;
     }
-
 
     void print_impl(std::ostream& os, const std::vector<TreeElement<T>> *children, int indent ) const;
 
@@ -57,14 +56,12 @@ private:
 
 //-----------------------------------------
 
-
 template <typename T> inline
 void Tree<T>::print_impl(std::ostream &os, const std::vector<TreeElement<T>> *children, int indent) const
 {
     for (const auto& child: (*children))
     {
-        for (int i=0; i<indent; i++)
-        {
+        for (int i=0; i<indent; i++){
             os << " ";
         }
         os << child.value() << std::endl;
@@ -75,9 +72,7 @@ void Tree<T>::print_impl(std::ostream &os, const std::vector<TreeElement<T>> *ch
 template <typename T> inline
 TreeElement<T>::TreeElement(TreeElement<T> *parent, const T& value):
     _parent(parent), _value(value)
-{
-
-}
+{ }
 
 template <typename T> inline
 TreeElement<T>& TreeElement<T>::addChild(const T& value)
@@ -86,19 +81,16 @@ TreeElement<T>& TreeElement<T>::addChild(const T& value)
     return _children.back();
 }
 
-
 template <typename T> template<typename Vect> inline
 void Tree<T>::append(const Vect &concatenated_values)
 {
     TreeElement<T>* node = &_root;
 
-    for (const auto& value: concatenated_values)
-    {
+    for (const auto& value: concatenated_values){
         bool found = false;
         for (auto& child: (node->children() ) )
         {
-            if( child.value() == value)
-            {
+            if( child.value() == value) {
                 node = &(child);
                 found = true;
                 break;
@@ -130,17 +122,17 @@ const TreeElement<T> *Tree<T>::find(const Vect& concatenated_values, bool partia
         if( !found ) return nullptr;
     }
 
-    if( partial_allowed || node->children().empty() )
-    {
+    if( partial_allowed || node->children().empty() ) {
         return  node;
     }
     return nullptr;
 }
 
-}
+} // end namespace details
 
 typedef details::TreeElement<std::string> StringElement;
 typedef details::Tree<std::string> StringTree;
 
+} // end namespace StringPlayground
 
 #endif // STRINGTREE_H
